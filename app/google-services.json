@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "370673008893",
+    "firebase_url": "https://giftchenge.firebaseio.com",
+    "project_id": "giftchenge",
+    "storage_bucket": "giftchenge.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:370673008893:android:8807024d7f2c71d9f23e94",
+        "android_client_info": {
+          "package_name": "com.home.gifttest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "370673008893-etmpmqvjj5ecq1pc675o9h3h952ifiif.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.home.gifttest",
+            "certificate_hash": "e1d9c7567d891291ce5b37c234fb947459d18b21"
+          }
+        },
+        {
+          "client_id": "370673008893-cb9saifjf2fbhv36aiejc11nalh5qau8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJEfEWWeL3Ut3v_O5meZpkj-x54qPfhvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "370673008893-cb9saifjf2fbhv36aiejc11nalh5qau8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

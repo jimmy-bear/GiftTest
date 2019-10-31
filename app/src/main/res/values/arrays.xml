@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="gameIcon">
+        <item>@drawable/func_balance</item>
+        <item>@drawable/func_contacts</item>
+        <item>@drawable/func_finance</item>
+        <item>@drawable/func_transaction</item>
+        <item>@drawable/func_exit</item>
+    </array>
+
+</resources>
