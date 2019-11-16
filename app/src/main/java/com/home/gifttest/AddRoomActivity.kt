@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_add_room.*
 
@@ -76,7 +77,8 @@ class AddRoomActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance()
             .collection("rooms").document()
             .set(GameRoomItem(intent.getIntExtra("selectPosition",0),
-                ed_roomName.text.toString(),countrySelect,limitSelect))
+                ed_roomName.text.toString()
+                ,countrySelect,limitSelect,FirebaseAuth.getInstance().currentUser!!.uid))
     }
 
     private fun setGame(position:Int) {
