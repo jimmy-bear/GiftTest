@@ -1,15 +1,19 @@
 package com.home.gifttest.ui.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -17,6 +21,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.api.LogDescriptor
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.home.gifttest.AddGameActivity
 import com.home.gifttest.MainActivity
 import com.home.gifttest.R
 import kotlinx.android.synthetic.main.fragment_dashboard.*
@@ -35,13 +40,18 @@ class DashboardFragment : Fragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val recyc_game=root.findViewById<RecyclerView>(R.id.recyc_game)
+        val recycGame=root.findViewById<RecyclerView>(R.id.recyc_game)
         web_rule=root.findViewById<WebView>(R.id.web_rule)
+        val btnCreatGame=root.findViewById<Button>(R.id.btn_creatgame)
+        btnCreatGame.setOnClickListener {
+            startActivity(Intent(root.context,AddGameActivity::class.java))
+        }
         //val textView: TextView = root.findViewById(R.id.text_dashboard)
-        recyc_game.setHasFixedSize(true)
-        recyc_game.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
+
+        recycGame.setHasFixedSize(true)
+        recycGame.layoutManager=LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false)
         adapter=ItemAdapter(mutableListOf<GameItem>())
-        recyc_game.adapter=adapter
+        recycGame.adapter=adapter
         dashboardViewModel =
             ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
@@ -66,19 +76,20 @@ class DashboardFragment : Fragment() {
 
         override fun onBindViewHolder(holder: GameHolder, position: Int) {
             var item=items.get(position)
+            web_rule.loadUrl(items.get(0).ruleUrl)
             //傳入item物件
             holder.binto(item)
             holder.itemView.setOnClickListener {
-                onClick(item,position)
+                onListener(item,position)
             }
         }
 
     }
 
-    private fun onClick(item: GameItem, position: Int) {
+    private fun onListener(item: GameItem, position: Int) {
         Log.d(TAG,"onclick  : ${item.gameName}")
         web_rule.settings.javaScriptEnabled=true
-       // web_rule.loadUrl()
+        web_rule.loadUrl(item.ruleUrl)
 
     }
 

@@ -13,15 +13,16 @@ class GameHolder (view: View):RecyclerView.ViewHolder(view){
     val arrayIcon= arrayListOf<Int>(
         R.drawable.func_balance, R.drawable.func_contacts
         , R.drawable.func_finance, R.drawable.func_transaction, R.drawable.func_exit)
-    var tx_game=view.tx_game
-    var image_game=view.image_game
+    val arrayname= arrayListOf<String>()
+    var txGame=view.tx_game
+    var imageGame=view.image_game
     fun binto(item: GameItem){
-        tx_game.setText(item.gameName)
+        txGame.setText(item.gameName)
         //Glide
         Glide.with(itemView.context)
             .load(item.imageUrl)
             //更改圖檔大小
             .apply(RequestOptions().override(120))
-            .into(image_game)
+            .into(imageGame)
     }
 }
