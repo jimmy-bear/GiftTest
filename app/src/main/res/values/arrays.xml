@@ -42,5 +42,12 @@
     <string-array name="school">
         <item>無</item>
     </string-array>
-
+    <string-array name="gameName">
+        <item>"超達小"</item>
+        <item>"吃吃樂"</item>
+        <item>"遙遙去"</item>
+        <item>"猜猜樂"</item>
+        <item>"超級大"</item>
+        <item>"骰骰樂"</item>
+    </string-array>
 </resources>

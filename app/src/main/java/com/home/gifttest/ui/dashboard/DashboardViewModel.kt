@@ -3,23 +3,28 @@ package com.home.gifttest.ui.dashboard
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.home.gifttest.GameRoomItem
 
 class DashboardViewModel : ViewModel() {
 
 //    private val _text = MutableLiveData<String>().apply {
 //        value = "This is dashboard Fragment"
-    private var items=MutableLiveData<List<GameItem>>()
-
-    fun getItems():MutableLiveData<List<GameItem>>{
+    private var myRoomItems=MutableLiveData<List<GameRoomItem>>()
+    private val joinRoomItems=MutableLiveData<List<GameRoomItem>>()
+    fun getMyRoomItems():MutableLiveData<List<GameRoomItem>>{
         FirebaseFirestore.getInstance()
-            .collection("game")
+            .collection("rooms")
+            .whereEqualTo("userID",FirebaseAuth.getInstance().currentUser!!.uid)
+            .limit(3)
             .addSnapshotListener { querySnapshot, exception ->
                 if (querySnapshot!=null&&!querySnapshot.isEmpty){
-                    items.value=querySnapshot.toObjects(GameItem::class.java)
+                    myRoomItems.value=querySnapshot.toObjects(GameRoomItem::class.java)
                 }
+
             }
-        return items
+        return myRoomItems
     }
     //val text: LiveData<String> = _text
 }

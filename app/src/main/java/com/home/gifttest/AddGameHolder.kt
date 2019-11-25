@@ -4,6 +4,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.item_game.view.*
 
 class AddGameHolder(view:View) :RecyclerView.ViewHolder(view){

@@ -47,13 +47,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.1.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.1.0'
     //Firebase
-    implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    implementation 'com.google.firebase:firebase-firestore:21.3.0'
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     //FirebaseUI
-    implementation 'com.firebaseui:firebase-ui-firestore:6.0.2'
-    implementation 'com.firebaseui:firebase-ui-auth:6.0.2'
-    implementation 'com.firebaseui:firebase-ui-storage:6.0.2'
+    implementation 'com.firebaseui:firebase-ui-firestore:6.1.0'
+    implementation 'com.firebaseui:firebase-ui-auth:6.1.0'
+    implementation 'com.firebaseui:firebase-ui-storage:6.1.0'
     //error91638>65536
     //implementation 'com.android.support:multidex:1.0.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
