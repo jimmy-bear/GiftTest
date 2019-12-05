@@ -12,7 +12,7 @@
         <item>女</item>
     </string-array>
     <string-array name="country">
-        <item>請選擇</item>
+        <item>請選擇區域</item>
         <item>基隆市</item>
         <item>台北市</item>
         <item>新北市</item>
@@ -49,5 +49,28 @@
         <item>"猜猜樂"</item>
         <item>"超級大"</item>
         <item>"骰骰樂"</item>
+    </string-array>
+    <string-array name="gameType">
+        <item>"請選擇遊戲"</item>
+        <item>"超達小"</item>
+        <item>"吃吃樂"</item>
+        <item>"遙遙去"</item>
+        <item>"猜猜樂"</item>
+        <item>"超級大"</item>
+        <item>"骰骰樂"</item>
+    </string-array>
+    <string-array name="verify">
+        <item>已報名</item>
+        <item>審核中</item>
+    </string-array>
+    <string-array name="myRoomEdit">
+        <item>編輯房間資訊</item>
+        <item>刪除房間</item>
+        <item>離開</item>
+    </string-array>
+    <string-array name="joinRoomEdit">
+        <item>編輯報名資訊</item>
+        <item>取消報名</item>
+        <item>離開</item>
     </string-array>
 </resources>

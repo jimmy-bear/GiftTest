@@ -12,10 +12,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.net.toFile
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +22,7 @@ import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import kotlinx.android.synthetic.main.activity_add_room.*
-import kotlinx.android.synthetic.main.activity_edit.*
+import kotlinx.android.synthetic.main.activity_edit_user.*
 import kotlinx.android.synthetic.main.item_room.*
 import java.io.ByteArrayOutputStream
 import java.util.*
@@ -57,8 +54,17 @@ class AddRoomActivity : AppCompatActivity() {
             startActivityForResult(intent,REQUESTCODE)
         }
         btn_game_ok.setOnClickListener {
-            uploadData()
-
+            if(!ed_roomName.text.toString().equals("")) {
+                if(limitSelect==2&&ed_roomPassword.text.toString().equals("")) {
+                    AlertDialog.Builder(this).setMessage("請填寫密碼").setPositiveButton("OK",
+                        DialogInterface.OnClickListener { dialog, which ->  }).show()
+                }else {
+                    uploadData()
+                }
+            }else{
+                AlertDialog.Builder(this).setMessage("請填寫房間名稱").setPositiveButton("OK",
+                    DialogInterface.OnClickListener { dialog, which ->  }).show()
+            }
         }
         btn_gamec.setOnClickListener {
             finish()
@@ -68,11 +74,13 @@ class AddRoomActivity : AppCompatActivity() {
             tx_note.text=when(checkedId){
                 R.id.rad_free->{
                     ed_roomPassword.visibility=View.GONE
+                    ed_roomPassword.setText("")
                     limitSelect=0
                     "自由"
                 }
                 R.id.rad_apply->{
                     ed_roomPassword.visibility=View.GONE
+                    ed_roomPassword.setText("")
                     limitSelect=1
                     "申請"
                 }
@@ -123,7 +131,7 @@ class AddRoomActivity : AppCompatActivity() {
         bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos)
         val imageData = baos.toByteArray()
         val storagemeta=StorageMetadata.Builder().setCustomMetadata("Mykey","MyValue").build()
-        var ref=FirebaseStorage.getInstance()
+        val ref=FirebaseStorage.getInstance()
             .getReference()
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
             .child("roomIcon")
@@ -142,7 +150,9 @@ class AddRoomActivity : AppCompatActivity() {
                         ,countrySelect,limitSelect
                         ,FirebaseAuth.getInstance().currentUser!!.uid
                         , Random.nextInt(10000)
-                        ,downloadUri,ref.path))
+                        ,downloadUri,ref.path
+                        ,ed_roomPassword.text.toString()
+                        ,1))
                     .addOnCompleteListener { task ->
                         if(task.isSuccessful){
                             AlertDialog.Builder(this).setMessage("上傳成功").setPositiveButton("OK",

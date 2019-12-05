@@ -12,7 +12,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.get
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -22,11 +21,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.home.gifttest.R
-import kotlinx.android.synthetic.main.activity_add_room.*
-import kotlinx.android.synthetic.main.activity_edit.*
-import kotlinx.android.synthetic.main.fragment_notifications.*
+import kotlinx.android.synthetic.main.activity_edit_user.*
 import java.io.ByteArrayOutputStream
-import java.util.*
 
 class EditActivity : AppCompatActivity() {
 
@@ -40,7 +36,7 @@ class EditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        setContentView(R.layout.activity_edit_user)
         notificationsViewModel =
             ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         //sp
@@ -49,17 +45,20 @@ class EditActivity : AppCompatActivity() {
         sp_country.adapter= ArrayAdapter.createFromResource(this,R.array.country,android.R.layout.simple_spinner_item)
             .apply { setDropDownViewResource(android.R.layout.simple_dropdown_item_1line) }
         notificationsViewModel.getPersonItems().observe(this, Observer {
-            ed_nickname.setText(it.nickname)
-            ed_age.setText(it.age)
-            sp_sex.setSelection(it.sexuality)
-            sp_country.setSelection(it.country)
-            if(it.userIcon!="") {
-                downloadUri = it.userIcon
-                Glide.with(this)
-                    .load(downloadUri)
-                    .apply(RequestOptions().override(240))
-                    .into(image_eduser)
+            if(it!=null){
+                ed_nickname.setText(it.nickname)
+                ed_age.setText(it.age)
+                sp_sex.setSelection(it.sexuality)
+                sp_country.setSelection(it.country)
+                if(it.userIcon!="") {
+                    downloadUri = it.userIcon
+                    Glide.with(this)
+                        .load(downloadUri)
+                        .apply(RequestOptions().override(240))
+                        .into(image_eduser)
+                }
             }
+
         })
 
         //ChooseImage
@@ -80,7 +79,7 @@ class EditActivity : AppCompatActivity() {
                 val storagemeta =
                     StorageMetadata.Builder().setCustomMetadata("Mykey", "MyValue").build()
 
-                var ref = FirebaseStorage.getInstance()
+                val ref = FirebaseStorage.getInstance()
                     .getReference()
                     .child(userUid)
                     .child("userIcon")
@@ -127,26 +126,34 @@ class EditActivity : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        FirebaseFirestore.getInstance()
-            .collection("user")
-            .document(userUid)
-            .set(
-                PersonItem(
-                    ed_nickname.text.toString()
-                    , sexPosition
-                    , countryPosition
-                    , ed_age.text.toString()
-                    , downloadUri
+        if(ed_nickname.text.toString()!=""&&ed_age.text.toString()!="") {
+            FirebaseFirestore.getInstance()
+                .collection("user")
+                .document(userUid)
+                .set(
+                    PersonItem(
+                        ed_nickname.text.toString()
+                        , sexPosition
+                        , countryPosition
+                        , ed_age.text.toString()
+                        , downloadUri
+                    )
                 )
-            )
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    AlertDialog.Builder(this).setMessage("上傳成功")
-                        .setPositiveButton("OK",
-                            DialogInterface.OnClickListener { dialog, which -> finish() })
-                        .show()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        setResult(Activity.RESULT_OK)
+                        AlertDialog.Builder(this).setMessage("上傳成功")
+                            .setPositiveButton("OK",
+                                DialogInterface.OnClickListener { dialog, which -> finish() })
+                            .show()
+                    }
                 }
-            }
+        }
+        else
+            AlertDialog.Builder(this).setMessage("資料未輸入完成")
+                .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+
+                })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -15,7 +15,7 @@ class PropHolder(view:View) :RecyclerView.ViewHolder(view){
         propNumber.text=item.number.toString()
         propName.text=item.name
         Glide.with(itemView.context)
-            .load(item.iconUrl)
+            .load(item.iconUri)
             .apply(RequestOptions().override(100))
             .into(propIcon)
     }

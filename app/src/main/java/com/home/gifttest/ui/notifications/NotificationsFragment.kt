@@ -32,23 +32,16 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel =
             ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
-
-
+        val spPropGameType=root.findViewById<Spinner>(R.id.sp_prop_gametype)
+        val recycleProp=root.findViewById<RecyclerView>(R.id.recycle_prop)
         val txNickname:TextView=root.findViewById(R.id.tx_nickname)
         val txSex:TextView=root.findViewById(R.id.tx_sex)
         val txCountry:TextView=root.findViewById(R.id.tx_country)
         val txAge:TextView=root.findViewById(R.id.tx_age)
-        val spPropGameType=root.findViewById<Spinner>(R.id.sp_prop_gametype)
-        val recycleProp=root.findViewById<RecyclerView>(R.id.recycle_prop)
         val imageUserIcon=root.findViewById<ImageView>(R.id.image_userIcon)
         val imageBEdit=root.findViewById<ImageButton>(R.id.image_B_edit)
 
         pAdapter= propAdapter(mutableListOf<PropItem>())
-        recycleProp.apply {
-            setHasFixedSize(true)
-            layoutManager=GridLayoutManager(root.context,2)
-            adapter=pAdapter
-        }
 
         spPropGameType.adapter=ArrayAdapter
             .createFromResource(root.context,R.array.gameName,android.R.layout.simple_spinner_item).apply {
@@ -58,6 +51,11 @@ class NotificationsFragment : Fragment() {
             pAdapter.items=it
             pAdapter.notifyDataSetChanged()
         })
+        recycleProp.apply {
+            setHasFixedSize(true)
+            layoutManager=GridLayoutManager(root.context,2)
+            adapter=pAdapter
+        }
         notificationsViewModel.getPersonItems().observe(this, Observer {
             txNickname.text=it.nickname
             txAge.text=it.age
@@ -75,6 +73,8 @@ class NotificationsFragment : Fragment() {
         return root
 
     }
+
+
     inner class propAdapter(var items:List<PropItem>):RecyclerView.Adapter<PropHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropHolder {
             return PropHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prop,parent,false))
