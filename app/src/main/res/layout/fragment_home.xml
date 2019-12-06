@@ -27,6 +27,7 @@
         android:ems="10"
         android:hint="number"
         android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/text_home"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toEndOf="@+id/text_home"
         app:layout_constraintTop_toTopOf="parent" />

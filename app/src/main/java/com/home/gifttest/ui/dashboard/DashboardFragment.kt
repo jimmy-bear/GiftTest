@@ -124,7 +124,8 @@ class DashboardFragment : Fragment() {
             holder.binto(creatItems[position],arrayCountry)
             holder.itemView.setOnClickListener {  }
             holder.itemView.setOnLongClickListener {
-                AlertDialog.Builder(this@DashboardFragment.context!!).setTitle("房名:\t${creatItems[position].roomName}").setItems(R.array.myRoomEdit,
+                AlertDialog.Builder(this@DashboardFragment.context!!).setTitle("房名:\t${creatItems[position].roomName}")
+                    .setItems(R.array.myRoomEdit,
                     DialogInterface.OnClickListener { dialog, which ->
                         when(which){
                             0->Log.d(TAG,"0")
@@ -160,7 +161,8 @@ class DashboardFragment : Fragment() {
             holder.binto(joinItems[position],arrayCountry)
             holder.itemView.setOnClickListener {  }
             holder.itemView.setOnLongClickListener {
-                AlertDialog.Builder(this@DashboardFragment.context!!).setTitle("房名:\t${joinItems[position].roomName}").setItems(R.array.myRoomEdit,
+                AlertDialog.Builder(this@DashboardFragment.context!!).setTitle("房名:\t${joinItems[position].roomName}")
+                    .setItems(R.array.joinRoomEdit,
                     DialogInterface.OnClickListener { dialog, which ->
                         when(which){
                             0->Log.d(TAG,"0")

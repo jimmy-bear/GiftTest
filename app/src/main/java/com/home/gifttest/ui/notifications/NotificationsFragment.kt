@@ -21,9 +21,8 @@ class NotificationsFragment : Fragment() {
 
 
     private lateinit var notificationsViewModel: NotificationsViewModel
-    private lateinit var pAdapter:propAdapter
+    private lateinit var pAdapter:PropAdapter
     private val TAG=NotificationsFragment::class.java.simpleName
-    val userUID=FirebaseAuth.getInstance().currentUser!!.uid
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +40,7 @@ class NotificationsFragment : Fragment() {
         val imageUserIcon=root.findViewById<ImageView>(R.id.image_userIcon)
         val imageBEdit=root.findViewById<ImageButton>(R.id.image_B_edit)
 
-        pAdapter= propAdapter(mutableListOf<PropItem>())
+        pAdapter= PropAdapter(mutableListOf<PropItem>())
 
         spPropGameType.adapter=ArrayAdapter
             .createFromResource(root.context,R.array.gameName,android.R.layout.simple_spinner_item).apply {
@@ -75,7 +74,7 @@ class NotificationsFragment : Fragment() {
     }
 
 
-    inner class propAdapter(var items:List<PropItem>):RecyclerView.Adapter<PropHolder>(){
+    inner class PropAdapter(var items:List<PropItem>):RecyclerView.Adapter<PropHolder>(){
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropHolder {
             return PropHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_prop,parent,false))
         }
@@ -85,7 +84,7 @@ class NotificationsFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: PropHolder, position: Int) {
-            holder.binto(items.get(position))
+            holder.binto(items[position])
         }
 
     }

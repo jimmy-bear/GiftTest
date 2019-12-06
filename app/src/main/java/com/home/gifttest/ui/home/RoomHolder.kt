@@ -21,10 +21,17 @@ class RoomHolder (view:View):RecyclerView.ViewHolder(view){
     fun binto(item: GameRoomItem, countryName: Array<String>){
         roomName.text=item.roomName
         roomMode.text=gameNameList.get(item.gameMode)
-        roomCount.text=item.count.toString()
         roomNumber.text=item.roomNumber.toString()
         roomCountry.text=countryName[item.country]
-        txApplyCount.text=item.applyCount.toString()
+        //判斷是否再更換值
+        if(item.count>5000||item.applyCount>5000) {
+            txApplyCount.text =""
+            roomCount.text =""
+        }else{
+            txApplyCount.text = item.applyCount.toString()
+            roomCount.text = item.count.toString()
+        }
+
         //imageLock.setImageResource(R.drawable.baseline_lock_black_18dp)
         Glide.with(itemView.context)
             .load(item.iconUri)

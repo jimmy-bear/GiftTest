@@ -38,15 +38,12 @@ class HomeViewModel : ViewModel() {
         loadRoomData()
         return roomItems
     }
-    fun updateRoom(){
-        loadRoomData()
-    }
     private fun loadRoomData() {
         val userUid=FirebaseAuth.getInstance().currentUser?.uid
         FirebaseFirestore.getInstance()
             .collection("rooms")
-            .get().addOnSuccessListener { roomSnapshot ->
-                if (roomSnapshot != null && !roomSnapshot.isEmpty) {
+            .addSnapshotListener { roomQuerySnapshot, firebaseFirestoreException ->
+                if (roomQuerySnapshot != null && !roomQuerySnapshot.isEmpty) {
                     val roomList = mutableListOf<GameRoomItem>()
                     FirebaseFirestore.getInstance()
                         .collection("user")
@@ -54,7 +51,7 @@ class HomeViewModel : ViewModel() {
                         .collection("joinRoom")
                         .get().addOnSuccessListener { joinSanpshot ->
                             if (joinSanpshot != null) {
-                                for (roomdoc in roomSnapshot.documents) {
+                                for (roomdoc in roomQuerySnapshot.documents) {
 
                                     //檢查是否已經報名過
                                     var isRepeat = false
@@ -68,7 +65,7 @@ class HomeViewModel : ViewModel() {
                                         item.documentID = roomdoc.id
                                         //只顯示別人開創的房間
                                         if(item.userID!=userUid)
-                                        roomList.add(item)
+                                            roomList.add(item)
                                     }
                                 }
                                 roomItems.value = roomList

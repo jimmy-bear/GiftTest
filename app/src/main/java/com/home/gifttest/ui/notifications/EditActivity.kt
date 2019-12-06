@@ -65,8 +65,10 @@ class EditActivity : AppCompatActivity() {
         btn_picture.setOnClickListener {
             val intent = Intent()
             intent.apply {
-                setType("image/*")
-                setAction(Intent.ACTION_GET_CONTENT)
+                //setType()
+                type="image/*"
+                action=Intent.ACTION_GET_CONTENT
+                //setAction()
             }
             startActivityForResult(intent, REQUESTCODE)
         }
@@ -75,17 +77,17 @@ class EditActivity : AppCompatActivity() {
             if(isChengePicture) {
                 val bitmap = (image_eduser.drawable as BitmapDrawable).bitmap
                 val baos = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos)
+                bitmap.compress(Bitmap.CompressFormat.PNG, 50, baos)
                 val storagemeta =
                     StorageMetadata.Builder().setCustomMetadata("Mykey", "MyValue").build()
 
                 val ref = FirebaseStorage.getInstance()
-                    .getReference()
+                    .reference
                     .child(userUid)
                     .child("userIcon")
                     .child("headShot.jpg")
                 val uploadTask = ref.putBytes(baos.toByteArray(), storagemeta)
-                uploadTask.addOnSuccessListener { UploadTask ->
+                uploadTask.addOnSuccessListener {
                     ref.downloadUrl.addOnCompleteListener {
                         downloadUri = it.result.toString()
                         uploadData()
@@ -102,7 +104,7 @@ class EditActivity : AppCompatActivity() {
         //
         sp_sex.onItemSelectedListener=object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun onItemSelected(
@@ -113,7 +115,7 @@ class EditActivity : AppCompatActivity() {
         }
         sp_country.onItemSelectedListener=object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
             }
 
             override fun onItemSelected(
@@ -144,16 +146,16 @@ class EditActivity : AppCompatActivity() {
                         setResult(Activity.RESULT_OK)
                         AlertDialog.Builder(this).setMessage("上傳成功")
                             .setPositiveButton("OK",
-                                DialogInterface.OnClickListener { dialog, which -> finish() })
+                                DialogInterface.OnClickListener { dialog, which ->
+                                    finish()
+                                })
                             .show()
                     }
                 }
         }
         else
             AlertDialog.Builder(this).setMessage("資料未輸入完成")
-                .setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-
-                })
+                .setPositiveButton("OK",null)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

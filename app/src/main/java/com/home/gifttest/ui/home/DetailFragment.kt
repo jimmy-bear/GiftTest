@@ -109,8 +109,8 @@ class DetailFragment : DialogFragment() {
         }
         btnEnter.setOnClickListener {
             val authUid=FirebaseAuth.getInstance().currentUser!!.uid
-            var allCount=roomItem.count
-            var applyCount=roomItem.applyCount
+            //var allCount=roomItem.count
+            //var applyCount=roomItem.applyCount
             //上傳房間資訊到我報名的房間，藉由funtion新增至join，*做審核或自由
             //審查制
             if(roomItem.limitMode==1){
@@ -118,12 +118,14 @@ class DetailFragment : DialogFragment() {
                 FirebaseFirestore.getInstance().collection("rooms")
                     .document(roomid!!)
                     .collection("applicants").document(authUid)
-                    .set(mapOf<String,String>("gameName" to "")).addOnSuccessListener {
-                         FirebaseFirestore.getInstance().collection("rooms")
-                             .document(roomid!!).update("applyCount",applyCount+1)
-                             .addOnSuccessListener {
-                                Toast.makeText(this.context, "等待開房者審核", Toast.LENGTH_LONG).show()
-                                dismiss() }
+                    .set(personItem).addOnSuccessListener {
+                        Toast.makeText(this.context, "等待開房者審核", Toast.LENGTH_LONG).show()
+                        dismiss()
+//                         FirebaseFirestore.getInstance().collection("rooms")
+//                             .document(roomid!!).update("applyCount",applyCount+1)
+//                             .addOnSuccessListener {
+//                                Toast.makeText(this.context, "等待開房者審核", Toast.LENGTH_LONG).show()
+//                                dismiss() }
 
                             }
 
@@ -132,12 +134,14 @@ class DetailFragment : DialogFragment() {
                  FirebaseFirestore.getInstance().collection("rooms")
                      .document(roomid!!)
                      .collection("joins").document(authUid)
-                     .set(mapOf<String,String>("gameName" to "")).addOnSuccessListener {
-                          FirebaseFirestore.getInstance().collection("rooms")
-                              .document(roomid!!).update("count",allCount+1)
-                              .addOnSuccessListener {
-                                  Toast.makeText(this.context, "報名成功", Toast.LENGTH_LONG).show()
-                                  dismiss() }
+                     .set(personItem).addOnSuccessListener {
+                         Toast.makeText(this.context, "報名成功", Toast.LENGTH_LONG).show()
+                         dismiss()
+//                          FirebaseFirestore.getInstance().collection("rooms")
+//                              .document(roomid!!).update("count",allCount+1)
+//                              .addOnSuccessListener {
+//                                  Toast.makeText(this.context, "報名成功", Toast.LENGTH_LONG).show()
+//                                  dismiss() }
                             }
                     }
 

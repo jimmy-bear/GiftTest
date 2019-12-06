@@ -20,7 +20,12 @@ class MyJoinRoomHolder(view:View) :RecyclerView.ViewHolder(view){
     fun binto(item:GameRoomItem, countryName: Array<String>){
         roomName.text=item.roomName
         roomMode.text=gameNameList.get(item.gameMode)
-        roomCount.text=item.count.toString()
+        if(item.count>500){
+            roomCount.text=""
+        }
+        else {
+            roomCount.text = item.count.toString()
+        }
         roomNumber.text=item.roomNumber.toString()
         roomCountry.text=countryName[item.country]
         Glide.with(itemView.context)

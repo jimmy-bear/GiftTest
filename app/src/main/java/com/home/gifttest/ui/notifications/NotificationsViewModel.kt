@@ -25,8 +25,9 @@ class NotificationsViewModel : ViewModel() {
         FirebaseFirestore.getInstance()
             .collection("user")
             .document(FirebaseAuth.getInstance().currentUser!!.uid)
-            .get().addOnSuccessListener {
-                personItem.value=it.toObject(PersonItem::class.java)
+            .addSnapshotListener { documentSnapshot, firebaseFirestoreException ->
+                if(documentSnapshot!=null)
+                personItem.value=documentSnapshot.toObject(PersonItem::class.java)
             }
         return personItem
     }
